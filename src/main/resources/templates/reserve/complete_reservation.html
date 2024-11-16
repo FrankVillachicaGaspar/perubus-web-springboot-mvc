@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Complete reservation</title>
+</head>
+<body layout:fragment="body">
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Formulario de Reservación</h2>
+                    <div class="alert alert-info" role="alert">
+                        <h4 class="alert-heading">Detalles de la reserva</h4>
+                        <p class="mb-0">
+                            <strong>Destino:</strong>
+                            <span id="selectedDestination" th:text="${reservation.getTrip().getDestination()}"></span>
+                        </p>
+                        <p class="mb-0">
+                            <strong>Destino:</strong>
+                            <span id="selectedSeatNumber" th:text="${reservation.getSeat().getNumber()}"></span>
+                        </p>
+                        <p class="mb-0">
+                            <strong>Número de asiento:</strong>
+                            <span id="selectedSeat" th:text="${reservation.getSeat().getNumber()}"></span>
+                        </p>
+                    </div>
+                    <p class="text-muted text-center mb-4">Por favor, complete los siguientes datos del cliente para
+                        finalizar su reservación:</p>
+                    <form method="POST" th:action="@{/reserve/complete}" th:object="${reservation}">
+                        <input type="hidden" th:field="*{id}">
+
+                        <div class="mb-3">
+                            <label for="customerName" class="form-label">Nombre del cliente</label>
+                            <input type="text" class="form-control" id="customerName" required
+                                   th:field="*{customerName}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="customerEmail" class="form-label">Correo electrónico del cliente</label>
+                            <input type="email" class="form-control" id="customerEmail" required
+                                   th:field="*{customerEmail}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="customerPhoneNumber" class="form-label">Número de teléfono del cliente</label>
+                            <input type="tel" class="form-control" id="customerPhoneNumber" required
+                                   th:field="*{customerPhoneNumber}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="customerDni" class="form-label">DNI del cliente</label>
+                            <input type="text" class="form-control" id="customerDni" required th:field="*{customerDni}">
+                        </div>
+
+                        <div class="d-flex gap-2 w-100">
+                            <a th:href="@{/reserve/cancel/{reserveId}(reserveId=${reservation.getId()})}" class="btn btn-danger w-100">Cancelar Reservación</a>
+                            <button type="submit" class="btn btn-primary w-100">Completar Reservación</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

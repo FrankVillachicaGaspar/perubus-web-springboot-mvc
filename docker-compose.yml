@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:16.4-alpine
+    container_name: postgresql-perubus
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=perubus_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - "./postgres-data:/var/lib/postgresql/data"
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: springboot-perubus
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/perubus_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    depends_on:
+      - db

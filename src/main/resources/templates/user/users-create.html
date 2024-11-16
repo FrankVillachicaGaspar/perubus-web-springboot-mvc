@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Users create</title>
+</head>
+<body>
+<main layout:fragment="body">
+    <div class="d-flex flex-column mx-auto" style="max-width: 500px">
+        <h1 class="text-center my-5">Registrar usuario</h1>
+        <form role="form" method="post" th:action="@{/users/new}" th:object="${user}" class="container-fluid">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" th:field="*{name}">
+                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></p>
+            </div>
+            <div class="mb-3">
+                <label for="lastname" class="form-label">Lastname</label>
+                <input type="text" class="form-control" id="lastname" th:field="*{lastname}">
+                <p th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}" class="text-danger"></p>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" aria-describedby="emailHelp" th:field="*{email}">
+                <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></p>
+                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

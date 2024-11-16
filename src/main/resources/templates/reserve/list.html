@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body layout:fragment="body">
+<div class="container mt-5">
+    <style>
+        .status-pendiente {
+            background-color: #ffc107;
+            color: #000;
+        }
+
+        .status-completado {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .status-cancelado {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .badge {
+            font-size: 0.9em;
+            padding: 0.5em 0.7em;
+        }
+    </style>
+    <h1 class="mb-4">Listado de Reservas de Viaje</h1>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Destino</th>
+                <th>Asiento</th>
+                <th>Fecha de Salida</th>
+                <th>Fecha de Llegada</th>
+                <th>Correo del Cliente</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="reservation :${reservations}">
+                <td th:text="${reservation.getId()}"></td>
+                <td th:text="${reservation.getTrip().getDestination()}"></td>
+                <td th:text="${reservation.getSeat().getNumber()}"></td>
+                <td th:text="${#temporals.format(reservation.getTrip().getDepartureTime(), 'dd/MM/yyyy HH:mm:ss')}"></td>
+                <td th:text="${#temporals.format(reservation.getTrip().getArrivalTime(), 'dd/MM/yyyy HH:mm:ss')}"></td>
+                <td th:text="${reservation.getCustomerEmail()}"></td>
+                <td><span th:class="'badge rounded-pill status-'+${reservation.getStatus().toLowerCase()}" th:text="${reservation.getStatus()}"></span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

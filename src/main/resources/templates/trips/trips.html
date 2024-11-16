@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Trips</title>
+</head>
+<body>
+<div class="container my-5" layout:fragment="body">
+    <h1 class="text-center mb-5">Nuestros Destinos</h1>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <div th:each="trip :${trips}" class="col">
+            <div class="card h-100">
+                <img th:src="${trip.imageUrl}"
+                     class="card-img-top" alt="Cusco">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${trip.destination}"></h5>
+                    <p class="card-text" th:text="${trip.description}"></p>
+                    <p class="card-text"><strong th:text="'S/.' + ${trip.price}"></strong></p>
+                </div>
+                <div class="card-footer">
+                    <a th:href="@{/reserve/trip/{tripId}(tripId=${trip.id})}" class="btn btn-primary w-100">Haz tu reserva</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<main class="container my-0" layout:fragment="body">
+    <style>
+        .hero {
+            background-image: url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 500px;
+        }
+    </style>
+    <div class="hero d-flex align-items-center">
+        <div class="container text-white">
+            <h1 class="display-4">Descubre la belleza de nuestro país</h1>
+            <p class="lead">Viaja cómodo y seguro entre provincias</p>
+            <a th:href="@{/trips}" class="btn btn-primary btn-lg">Reserva ahora</a>
+        </div>
+    </div>
+    <h2 class="text-center my-4">Destinos populares</h2>
+    <div class="row">
+        <div th:each="trip :${trips}" class="col-md-4 mb-4">
+            <div class="card">
+                <img th:src="${trip.imageUrl}"
+                     class="card-img-top img-fluid" alt="Cusco">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${trip.destination}"></h5>
+                    <p class="card-text" th:text="${trip.description}"></p>
+                    <p class="card-text"><strong th:text="'S/.' + ${trip.price}"></strong></p>
+                    <a th:href="@{/reserve/trip/{tripId}(tripId=${trip.id})}" class="btn btn-primary">Haz tu reserva</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reserva completada</title>
+</head>
+<body layout:fragment="body">
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h2 class="card-title text-center text-success mb-4"
+                        th:text="'¡Felicitaciones ' + ${reservation.getCustomerName()} + '!'"></h2>
+                    <div class="alert alert-success" role="alert">
+                        <h4 class="alert-heading text-center">Su reserva se ha completado con éxito</h4>
+                    </div>
+                    <div class="card bg-light mb-4">
+                        <div class="card-body">
+                            <h5 class="card-title">Detalles de su viaje:</h5>
+                            <p class="card-text"><strong>Destino:</strong>
+                                <span id="destino" th:text="${reservation.getTrip().getDestination()}"></span></p>
+                            <p class="card-text"><strong>Número de asiento:</strong>
+                                <span id="seatNumber" th:text="${reservation.getSeat().getNumber()}"></span></p>
+                            <p class="card-text"><strong>Fecha de salida:</strong> <span
+                                    id="fechaSalida"
+                                    th:text="${#temporals.format(reservation.getTrip().getDepartureTime(), 'dd/MM/yyyy HH:mm:ss')}"></span>
+                            </p>
+                            <p class="card-text"><strong>Fecha de llegada:</strong> <span
+                                    id="fechaLlegada" th:text="${#temporals.format(reservation.getTrip().getArrivalTime(), 'dd/MM/yyyy HH:mm:ss')}"></span></p>
+                        </div>
+                    </div>
+                    <p class="text-danger" th:text="'El asiento no podrá ser reservado por nadie más hasta el '+${#temporals.format(reservation.getSeat().getBlockTime(), 'dd/MM/yyyy HH:mm:ss')}"></p>
+                    <div class="d-grid gap-2">
+                        <a class="btn btn-primary" th:href="@{/home}">Volver al inicio</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
